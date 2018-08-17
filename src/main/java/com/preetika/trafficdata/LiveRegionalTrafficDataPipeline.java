@@ -59,7 +59,9 @@ public class LiveRegionalTrafficDataPipeline {
 					@ProcessElement
 					public void processElement(ProcessContext c) throws Exception {
 						String line = c.element();
-						c.output(LiveRegionalTrafficData.fromString(line));
+						LiveRegionalTrafficData data = LiveRegionalTrafficData.fromString(line);
+						LOG.debug("Created regional traffic data object {}", String.valueOf(data));
+						c.output(data);
 					}
 				}));
 
@@ -78,6 +80,7 @@ public class LiveRegionalTrafficDataPipeline {
 				row.set("region", trafficData.getRegion());
 				row.set("west", trafficData.getWest());
 				row.set("description", trafficData.getDescription());
+				LOG.debug("Created big query row {}", String.valueOf(row));
 				c.output(row);
 			}
 		})).apply(BigQueryIO.writeTableRows().to(BIG_QUERY_TABLE).withSchema(getTableSchema())

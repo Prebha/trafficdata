@@ -9,7 +9,7 @@ public class LiveRegionalTrafficData {
 
 	private float currentSpeed;
 	private float east;
-	private String last_updt;
+	private String lastUpdate;
 	private String regionId;
 	private float north;
 	private float south;
@@ -24,15 +24,15 @@ public class LiveRegionalTrafficData {
 	public static LiveRegionalTrafficData fromString(String line) {
 		JSONObject jsonObject = new JSONObject(line);
 		LiveRegionalTrafficData data = new LiveRegionalTrafficData();
-		data.currentSpeed = Float.parseFloat(jsonObject.getString("current_speed"));
-		data.east = Float.parseFloat(jsonObject.getString("_east"));
-		data.last_updt = jsonObject.getString("_last_updt");
-		data.regionId = jsonObject.getString("_region_id");
-		data.north = Float.parseFloat(jsonObject.getString("_north"));
-		data.south = Float.parseFloat(jsonObject.getString("_south"));
-		data.region = jsonObject.getString("region");
-		data.west = Float.parseFloat(jsonObject.getString("_west"));
-		data.description = jsonObject.getString("_description");
+		data.currentSpeed = Float.parseFloat(JsonHelper.getJsonString(jsonObject, "current_speed"));
+		data.east = Float.parseFloat(JsonHelper.getJsonString(jsonObject, "_east"));
+		data.lastUpdate = JsonHelper.getJsonString(jsonObject, "_last_updt");
+		data.regionId = JsonHelper.getJsonString(jsonObject, "_region_id");
+		data.north = Float.parseFloat(JsonHelper.getJsonString(jsonObject, "_north"));
+		data.south = Float.parseFloat(JsonHelper.getJsonString(jsonObject, "_south"));
+		data.region = JsonHelper.getJsonString(jsonObject, "region");
+		data.west = Float.parseFloat(JsonHelper.getJsonString(jsonObject, "_west"));
+		data.description = JsonHelper.getJsonString(jsonObject, "_description");
 		return data;
 	}
 
@@ -45,7 +45,7 @@ public class LiveRegionalTrafficData {
 	}
 
 	public String getLast_updt() {
-		return last_updt;
+		return lastUpdate;
 	}
 
 	public String getRegionId() {
